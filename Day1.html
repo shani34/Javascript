@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>javascript first</title>
+	<style>
+	body
+	{
+		background-image: url("images/pexels1.jpg");
+		background-repeat: no-repeat;
+		background-position: right;
+		background-attachment: scroll;
+		margin-right: 50%;
+
+	}
+		.key{
+			border: solid black;
+		 border-radius:5px ;
+		 margin: 1rem;
+		 font-size: 1.5rem;
+		 padding: 1rem,.5rem;
+		 transition: all 0.10s;
+		 width: 100px;
+		 text-align: center;
+		 color: white;
+		 background: rgba(0,0,0,0.4);
+		 text-shadow: 0 0 5px black;
+		}
+		.playing
+		{
+			transform: scale(1.4);
+			border-color: #ffc600;
+			box-shadow: 0 0 10px #ffc600;
+		}
+		.kbd{
+			display: block;
+			font-size: 40px;
+		}
+		.sound{
+			font-size: 1.2rem;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #ffc600;
+		}
+	
+	</style>
+</head>
+
+<body>
+<div class="keys">
+<div data-key ="65" class="key">
+	<kbd>A</kbd>
+	<p class="sound">clap</p>
+</div>
+<div data-key ="83" class="key">
+	<kbd>S</kbd>
+	<p class="sound">hithat</p>
+</div>
+<div data-key ="68" class="key">
+	<kbd>D</kbd>
+	<p class="sound">kick</p>
+</div>
+<div data-key ="70" class="key">
+	<kbd>F</kbd>
+	<p class="sound">openhat</p>
+</div>
+<div data-key ="71" class="key">
+	<kbd>G</kbd>
+	<p class="sound">boom</p>
+</div>
+<div data-key ="72" class="key">
+	<kbd>H</kbd>
+	<p class="sound">clap</p>
+</div>
+<div data-key ="75" class="key">
+	<kbd>K</kbd>
+	<p class="sound">tom</p>
+</div>
+</div>
+<audio data-key="65" src="sounds/Kgf Bgm.mp3"></audio>
+<audio data-key="83" src="sounds/Big_Thwack_120.wav"></audio>
+<audio data-key="68" src="sounds/Cymbal_Groove.wav"></audio>
+<audio data-key="70" src="sounds/Driving_Force_120.wav"></audio>
+<audio data-key="71" src="sounds/first_beat.wav"></audio>
+<audio data-key="72" src="sounds/Pounder_130.wav"></audio>
+<audio data-key="75" src="sounds/RatAtat_155.wav"></audio> 
+
+<script>
+	window.addEventListener('keydown', function(e){
+	 const audio=document.querySelector(`audio[data-key="${e.keyCode}"]`);
+	 const key=document.querySelector(`.key[data-key="${e.keyCode}"]`);
+	 if(!audio) return;
+	 audio.currentTime=0 //rewind to start
+	 audio.play();
+	 key.classList.add('playing');
+	});
+	function removeTransition(e){
+		if(e.propertyName!=='transform') return;//
+		this.classList.remove('playing');
+		
+	}
+	const keys=document.querySelectorAll('.key');
+	keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+</script>
+</body>
+</html>
